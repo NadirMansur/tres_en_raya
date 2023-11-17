@@ -1,7 +1,5 @@
 import { useState } from "react";
-import "./App.css";
 import confetti from "canvas-confetti";
-
 import { Square } from "./components/Square.jsx";
 import { TURNS } from "./constants.js";
 import { checkWinner, checkEndGame } from "./logic/board.js";
@@ -14,9 +12,11 @@ import {
 function App() {
   const [board, setBoard] = useState(() => {
     const boardFromStorage = window.localStorage.getItem("board");
-    return boardFromStorage
-      ? JSON.parse(boardFromStorage)
-      : Array(9).fill(null);
+    if (boardFromStorage) {
+      return JSON.parse(boardFromStorage);
+    } else {
+      return Array(9).fill(null);
+    }
   });
 
   const [turn, setTurn] = useState(() => {
@@ -26,6 +26,7 @@ function App() {
   const [winner, setWinner] = useState(null); //null no hya ganador, false empate
 
   const resetGame = () => {
+    console.log("resetGame"); 
     setBoard(Array(9).fill(null));
     setTurn(TURNS.x);
     setWinner(null);
@@ -45,13 +46,12 @@ function App() {
     if (newWinner) {
       confetti();
       setWinner(newWinner);
-      alert(`El Ganador es ${newWinner}`);
     } else if (checkEndGame(newBoard)) {
       setWinner(false); //empate
     }
-  };
+  }; 
   return (
-    <main className='board'>
+    <main className='board'> 
       <h1>Tres en raya</h1>
       <button onClick={resetGame}>Reset Game</button>
       <section className='game'>

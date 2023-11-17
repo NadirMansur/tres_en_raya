@@ -1,12 +1,14 @@
 export const Square = ({ children, isSelected, updateBoard, index }) => {
-    const className = `squere ${isSelected ? "is-selected" : ""}`;
-    const handleClick = () => {
-      updateBoard(index);
-    };
-  
-    return (
-      <div onCLick={handleClick} className={className}>
-        {children}
-      </div>
-    );
+  const className = `${isSelected ? "isSelected" : "square"}`;
+  const handleClick = () => {
+    updateBoard(index);
   };
+  //console.log("consologueando children",children);
+  return (
+    <div onClick={handleClick} className={className}>
+      {children}
+    </div>
+  );
+};
+
+
